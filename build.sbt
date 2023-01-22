@@ -26,7 +26,7 @@ inThisBuild(
         url("https://www.thesamet.com")
       )
     ),
-    PB.protocVersion := "3.15.6"
+    PB.protocVersion := "3.21.9"
   )
 )
 

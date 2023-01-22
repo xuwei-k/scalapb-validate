@@ -3,6 +3,12 @@ syntax = "proto3";
 package tests.harness.cases;
 option go_package = "github.com/envoyproxy/protoc-gen-validate/tests/harness/cases/go;cases";
 import "validate/validate.proto";
+import "scalapb/scalapb.proto";
+
+option (scalapb.options) = {
+  scope: PACKAGE
+  import: "foo.MyString._"
+};
 
 message TestOneOfMsg {
     bool val = 1 [(validate.rules).bool.const = true];
@@ -10,7 +16,10 @@ message TestOneOfMsg {
 
 message OneOfNone {
     oneof o {
-        string       x = 1;
+        string       x = 1[
+          (validate.rules).string.uuid = true,
+          (scalapb.field).type = "foo.MyString"
+        ];
         int32        y = 2;
     }
 }

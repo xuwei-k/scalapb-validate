@@ -3,6 +3,7 @@ syntax = "proto3";
 package tests.harness.cases;
 option go_package = "github.com/envoyproxy/protoc-gen-validate/tests/harness/cases/go;cases";
 import "validate/validate.proto";
+import "scalapb/scalapb.proto";
 
 message StringNone           { string val = 1; }
 message StringConst          { string val = 1 [(validate.rules).string.const = "foo"]; }
@@ -32,7 +33,11 @@ message StringIPv4           { string val = 1 [(validate.rules).string.ipv4 = tr
 message StringIPv6           { string val = 1 [(validate.rules).string.ipv6 = true]; }
 message StringURI            { string val = 1 [(validate.rules).string.uri = true]; }
 message StringURIRef         { string val = 1 [(validate.rules).string.uri_ref = true]; }
-message StringUUID           { string val = 1 [(validate.rules).string.uuid = true]; }
+message StringUUID           { string val = 1 [
+    (validate.rules).string.uuid = true,
+    (scalapb.field).type = "foo.MyString"
+  ];
+}
 message StringHttpHeaderName { string val = 1 [(validate.rules).string.well_known_regex = HTTP_HEADER_NAME]; }
 message StringHttpHeaderValue     { string val = 1 [(validate.rules).string.well_known_regex = HTTP_HEADER_VALUE]; }
 message StringValidHeader    { string val = 1 [(validate.rules).string = {well_known_regex: HTTP_HEADER_VALUE, strict: false}]; }
